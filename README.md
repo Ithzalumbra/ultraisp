@@ -6,7 +6,7 @@ Instituto de Salud Pública de Chile
 
 1.1- Despues de descargado, lo instalan en su computador.
 
-2.- Descargar "WAMP" si no lo tienen.
+2.- Descargar "WAMP" o equivalente.
 
 3.- Descargar Composer, lo instalan (Es necesario tener wamp o algun servidor instalado en el computador primero), seleccione una version de php superior a 5.6 en la instalacion de composer.
 
