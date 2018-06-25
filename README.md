@@ -18,4 +18,6 @@ Instituto de Salud Pública de Chile
 
 5.3- Cuando termine el "composer install", pegar este comando en la consola "bin/cake server -p 8765"
 
-6.- El programa esta listo
+6.- En la carpeta config modificar el archivo app.php donde dice 'Datasources', 'default' cambiar los datos a la base de datos local.
+
+7.- El programa esta listo
