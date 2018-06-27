@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * User Model
@@ -102,5 +103,13 @@ class UserTable extends Table
         $rules->add($rules->existsIn(['usertype_id'], 'Usertypes'));
 
         return $rules;
+    }
+
+    public function beforeSave($event, $entity, $options)
+    {
+        if($entity->dirty('password')){
+            $hasher = new DefaultPasswordHasher();
+            $entity->password = $hasher->hash($entity->password);
+        }
     }
 }

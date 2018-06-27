@@ -55,11 +55,11 @@ class UserController extends AppController
         if ($this->request->is('post')) {
             $user = $this->User->patchEntity($user, $this->request->getData());
             if ($this->User->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('El usuario se ha registrado correctamentes.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('Ha ocurrido un error, por favor intente nuevamente.'));
         }
         $usertypes = $this->User->Usertypes->find('list', ['limit' => 200]);
         $this->set(compact('user', 'usertypes'));
@@ -108,5 +108,46 @@ class UserController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function login()
+    {
+        if ($this->request->is(['post'])) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+
+                return $this->redirect($this->Auth->redirectUrl());
+            } else {
+                $this->Flash->error(__('RUT o contraseña incorrecto.'));
+            }
+        }
+    }
+
+    public function logout()
+    {
+        $this->Flash->success('Has cerrado sesión correctamente.');
+        return $this->redirect($this->Auth->logout());
+    }
+
+    public function register()
+    {
+        $user = $this->User->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->User->patchEntity($user, $this->request->getData());
+            if($user->usertype_id == 3 || $user->usertype_id == 5){
+                if ($this->User->save($user)) {
+                    $this->Flash->success(__('El usuario se ha registrado correctamentes.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('Ha ocurrido un error, por favor intente nuevamente.'));
+            }
+            else{
+                $this->Flash->error(__('Por favor no modificar datos NO autorizados.'));
+            }
+        }
+        $usertypes = $this->User->Usertypes->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'usertypes'));
     }
 }
