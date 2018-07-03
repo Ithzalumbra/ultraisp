@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `analysisresult`
 --
 
-CREATE TABLE `analysisresult` (
+CREATE TABLE `analysis_results` (
   `id` int(11) NOT NULL,
   `ppm` int(11) NOT NULL,
   `date_register` date NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `analysisresult` (
 -- Table structure for table `analysissamples`
 --
 
-CREATE TABLE `analysissamples` (
+CREATE TABLE `analysis_samples` (
   `id` int(11) NOT NULL,
   `date` date NOT NULL,
   `temperatureSample` decimal(10,0) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `analysissamples` (
 -- Table structure for table `analysistype`
 --
 
-CREATE TABLE `analysistype` (
+CREATE TABLE `analysis_types` (
   `id` int(11) NOT NULL,
   `name` varchar(45) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -66,7 +66,7 @@ CREATE TABLE `analysistype` (
 -- Dumping data for table `analysistype`
 --
 
-INSERT INTO `analysistype` (`id`, `name`) VALUES
+INSERT INTO `analysis_types` (`id`, `name`) VALUES
 (1, 'Detección micotoxinas'),
 (2, 'Detección metales pesados'),
 (3, 'Detección marea roja'),
@@ -79,7 +79,7 @@ INSERT INTO `analysistype` (`id`, `name`) VALUES
 -- Table structure for table `contact`
 --
 
-CREATE TABLE `contact` (
+CREATE TABLE `contacts` (
   `rut` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `name` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE `contact` (
 -- Table structure for table `phone`
 --
 
-CREATE TABLE `phone` (
+CREATE TABLE `phones` (
   `id` int(11) NOT NULL,
   `phone` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `particular_id` int(11) NOT NULL
@@ -105,7 +105,7 @@ CREATE TABLE `phone` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `rut` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE `user` (
 -- Table structure for table `user_type`
 --
 
-CREATE TABLE `user_type` (
+CREATE TABLE `user_types` (
   `id` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `description` varchar(100) COLLATE utf8_spanish_ci NOT NULL
@@ -131,7 +131,7 @@ CREATE TABLE `user_type` (
 -- Dumping data for table `user_type`
 --
 
-INSERT INTO `user_type` (`id`, `name`, `description`) VALUES
+INSERT INTO `user_types` (`id`, `name`, `description`) VALUES
 (1, 'Administrador', 'Crea, modifica y elimina los tipos de análisis, da de baja a los usuarios.'),
 (2, 'Receptor de muestras', 'Puede ingresar los datos de las muestras recibidas. '),
 (3, 'Empresa', 'Puede crear, modificar y dar de baja sus datos. '),
@@ -145,7 +145,7 @@ INSERT INTO `user_type` (`id`, `name`, `description`) VALUES
 --
 -- Indexes for table `analysisresult`
 --
-ALTER TABLE `analysisresult`
+ALTER TABLE `analysis_results`
   ADD PRIMARY KEY (`id`),
   ADD KEY `analysisSamples_id` (`analysisSamples_id`),
   ADD KEY `analysisType_id` (`analysisType_id`),
@@ -154,7 +154,7 @@ ALTER TABLE `analysisresult`
 --
 -- Indexes for table `analysissamples`
 --
-ALTER TABLE `analysissamples`
+ALTER TABLE `analysis_samples`
   ADD PRIMARY KEY (`id`),
   ADD KEY `employee_rut` (`employee_rut`),
   ADD KEY `particular_id` (`user_id`);
@@ -162,34 +162,34 @@ ALTER TABLE `analysissamples`
 --
 -- Indexes for table `analysistype`
 --
-ALTER TABLE `analysistype`
+ALTER TABLE `analysis_types`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `contact`
 --
-ALTER TABLE `contact`
+ALTER TABLE `contacts`
   ADD PRIMARY KEY (`rut`),
   ADD KEY `company_id` (`company_id`);
 
 --
 -- Indexes for table `phone`
 --
-ALTER TABLE `phone`
+ALTER TABLE `phones`
   ADD PRIMARY KEY (`id`),
   ADD KEY `particular_id` (`particular_id`);
 
 --
 -- Indexes for table `user`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usertype_id` (`usertype_id`);
 
 --
 -- Indexes for table `user_type`
 --
-ALTER TABLE `user_type`
+ALTER TABLE `user_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -199,35 +199,35 @@ ALTER TABLE `user_type`
 --
 -- AUTO_INCREMENT for table `analysisresult`
 --
-ALTER TABLE `analysisresult`
+ALTER TABLE `analysis_results`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `analysissamples`
 --
-ALTER TABLE `analysissamples`
+ALTER TABLE `analysis_samples`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `analysistype`
 --
-ALTER TABLE `analysistype`
+ALTER TABLE `analysis_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `phone`
 --
-ALTER TABLE `phone`
+ALTER TABLE `phones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user_type`
 --
-ALTER TABLE `user_type`
+ALTER TABLE `user_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
   
-  ALTER TABLE `user` ADD `status` BOOLEAN NOT NULL AFTER `email`;
+  ALTER TABLE `users` ADD `status` BOOLEAN NOT NULL AFTER `email`;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
