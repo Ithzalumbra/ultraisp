@@ -12,10 +12,11 @@ use Cake\ORM\Entity;
  * @property string $password
  * @property string $address
  * @property string $email
+ * @property bool $status
  * @property int $usertype_id
  *
- * @property \App\Model\Entity\Usertype $usertype
- * @property \App\Model\Entity\Analysissample[] $analysissamples
+ * @property \App\Model\Entity\UserType $usertype
+ * @property \App\Model\Entity\AnalysisSample[] $analysis_samples
  */
 class User extends Entity
 {
@@ -35,9 +36,10 @@ class User extends Entity
         'password' => true,
         'address' => true,
         'email' => true,
+        'status' => true,
         'usertype_id' => true,
         'usertype' => true,
-        'analysissamples' => true
+        'analysis_samples' => true
     ];
 
     /**

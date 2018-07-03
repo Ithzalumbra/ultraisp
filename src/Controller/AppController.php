@@ -50,15 +50,15 @@ class AppController extends Controller
 
         $this->loadComponent('Auth', [
             'loginAction' => [
-               'controller' => 'User',
+               'controller' => 'Users',
                'action' => 'login'
             ],
             'loginRedirect' => [
-               'controller' => 'User',
+               'controller' => 'Users',
                'action' => 'index'
             ],
             'logoutRedirect' => [
-               'controller' => 'User',
+               'controller' => 'Users',
                'action' => 'logout'
             ],
             'authError' => 'No puedes acceder a esa sección.',
@@ -67,7 +67,7 @@ class AppController extends Controller
             ],
             'authenticate' => [
                 'Form' => [
-                    'userModel' => 'User',
+                    'userModel' => 'Users',
                     'fields' => ['username' => 'rut', 'password' => 'password']
                 ]
             ]
@@ -91,10 +91,8 @@ class AppController extends Controller
             $this->set('currentUser', $this->Auth->user());
             $this->currentUser = $this->Auth->user();
             if($this->request->getParam("action") == 'login'){
-                $this->redirect(['controller' => 'User', 'action' => 'index']);
+                $this->redirect(['controller' => 'Users', 'action' => 'index']);
             }
-        }else{
-            $this->viewBuilder()->setLayout("login_default");
         }
     }
 
