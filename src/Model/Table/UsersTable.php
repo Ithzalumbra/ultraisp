@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,8 +10,11 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\UserTypesTable|\Cake\ORM\Association\BelongsTo $Usertypes
+ * @property \App\Model\Table\UserTypesTable|\Cake\ORM\Association\BelongsTo $UserTypes
+ * @property \App\Model\Table\AnalysisResultsTable|\Cake\ORM\Association\HasMany $AnalysisResults
  * @property \App\Model\Table\AnalysisSamplesTable|\Cake\ORM\Association\HasMany $AnalysisSamples
+ * @property |\Cake\ORM\Association\HasMany $Contacts
+ * @property |\Cake\ORM\Association\HasMany $Phones
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -38,13 +42,36 @@ class UsersTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Usertypes', [
+        $this->belongsTo('UserTypes', [
             'foreignKey' => 'usertype_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('AnalysisResults', [
+            'foreignKey' => 'user_id'
         ]);
         $this->hasMany('AnalysisSamples', [
             'foreignKey' => 'user_id'
         ]);
+        $this->hasMany('Contacts', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('Phones', [
+            'foreignKey' => 'user_id'
+        ]);
+
+//        $this->addBehavior('Search.Search');
+//
+//        $this->searchManager()
+//            ->add('name', 'Search.Like', [
+//                'before' => true,
+//                'after' => true,
+//                'comparison' => 'LIKE',
+//                'wildcardAny' => '*',
+//                'field' => ['name', 'lastname','lastname2']
+//            ])
+//            ->add('status', 'Search.Like', [
+//                'field' => ['active']
+//            ]);
     }
 
     /**
@@ -84,6 +111,7 @@ class UsersTable extends Table
 
         $validator
             ->email('email')
+            ->maxLength('address', 250)
             ->allowEmpty('email');
 
         $validator
@@ -103,9 +131,17 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['usertype_id'], 'Usertypes'));
+        $rules->add($rules->isUnique(['rut']));
+        $rules->add($rules->existsIn(['usertype_id'], 'UserTypes'));
 
         return $rules;
+    }
+
+    public function beforeSave($event, $entity, $options)
+    {
+        if($entity->dirty('password')){
+            $hasher = new DefaultPasswordHasher();
+            $entity->password = $hasher->hash($entity->password);
+        }
     }
 }

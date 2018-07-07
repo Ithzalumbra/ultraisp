@@ -12,7 +12,14 @@
 <body>
 <div class="wrp">
 
-    <?= $this->element('Layout/menu') ?>
+    <?php if($currentUser == null)
+        echo $this->element('Layout/menu');
+    else
+        echo $this->element('Layout/menulog');
+        ?>
+    <div class="row justify-content-center">
+        <?=$this->Flash->render()?>
+    </div>
     <div class="cnt">
 
         <?= $this->fetch('content') ?>

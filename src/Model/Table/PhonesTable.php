@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Phones Model
  *
- * @property \App\Model\Table\ParticularsTable|\Cake\ORM\Association\BelongsTo $Particulars
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\Phone get($primaryKey, $options = [])
  * @method \App\Model\Entity\Phone newEntity($data = null, array $options = [])
@@ -37,8 +37,8 @@ class PhonesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Particulars', [
-            'foreignKey' => 'particular_id',
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -73,7 +73,7 @@ class PhonesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['particular_id'], 'Particulars'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
     }

@@ -113,27 +113,50 @@ class UsersController extends AppController
     public function login()
     {
         if ($this->request->is(['post'])) {
+            pr($this->request->data);
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
+
                 return $this->redirect($this->Auth->redirectUrl());
             } else {
                 $this->Flash->error(__('RUT o contraseña incorrecto.'));
             }
         }
     }
+
     public function logout()
     {
         $this->Flash->success('Has cerrado sesión correctamente.');
         return $this->redirect($this->Auth->logout());
     }
+
     public function register()
     {
-        $user = $this->User->newEntity();
+        $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->User->patchEntity($user, $this->request->getData());
+            $user = $this->Users->patchEntity($user, $this->request->getData());
             if($user->usertype_id == 3 || $user->usertype_id == 5){
-                if ($this->User->save($user)) {
+                $user->status = 1;
+                if ($this->Users->save($user)) {
+                    if($user->usertype_id == 5 ){
+                        $phone = $this->Users->Phones->newEntity();
+                        $phone->phone =  $this->request->data['phone'];
+                        $phone->user_id = $user->id;
+                        pr($phone);
+                        if ($this->Users->Phones->save($phone)) {
+
+                        }
+                    }
+                    else{
+                        $contact = $this->Users->Contacts->newEntity();
+                        $contact = $this->Users->Contacts->patchEntity($contact, $this->request->data['contact']);
+                        $contact->user_id = $user->id;
+                        $contact->rut = $this->request->data['contact']['rut'];
+                        if ($this->Users->Contacts->save($contact)) {
+
+                        }
+                    }
                     $this->Flash->success(__('El usuario se ha registrado correctamentes.'));
                     return $this->redirect(['action' => 'index']);
                 }
@@ -143,7 +166,7 @@ class UsersController extends AppController
                 $this->Flash->error(__('Por favor no modificar datos NO autorizados.'));
             }
         }
-        $usertypes = $this->User->Usertypes->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'usertypes'));
+//        $usertypes = $this->Users->Usertypes->find('list', ['limit' => 200]);
+//        $this->set(compact('user', 'usertypes'));
     }
 }

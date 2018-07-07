@@ -70,12 +70,6 @@ class AnalysisSamplesTable extends Table
             ->requirePresence('quantitySample', 'create')
             ->notEmpty('quantitySample');
 
-        $validator
-            ->scalar('employee_rut')
-            ->maxLength('employee_rut', 10)
-            ->requirePresence('employee_rut', 'create')
-            ->notEmpty('employee_rut');
-
         return $validator;
     }
 

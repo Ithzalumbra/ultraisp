@@ -15,7 +15,8 @@ use Cake\ORM\Entity;
  * @property bool $status
  * @property int $usertype_id
  *
- * @property \App\Model\Entity\UserType $usertype
+ * @property \App\Model\Entity\UserType $user_type
+ * @property \App\Model\Entity\AnalysisResult[] $analysis_results
  * @property \App\Model\Entity\AnalysisSample[] $analysis_samples
  */
 class User extends Entity
@@ -38,7 +39,8 @@ class User extends Entity
         'email' => true,
         'status' => true,
         'usertype_id' => true,
-        'usertype' => true,
+        'user_type' => true,
+        'analysis_results' => true,
         'analysis_samples' => true
     ];
 

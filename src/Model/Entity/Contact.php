@@ -10,9 +10,9 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $email
  * @property string $phone
- * @property int $company_id
+ * @property int $user_id
  *
- * @property \App\Model\Entity\Company $company
+ * @property \App\Model\Entity\User $user
  */
 class Contact extends Entity
 {
@@ -30,7 +30,7 @@ class Contact extends Entity
         'name' => true,
         'email' => true,
         'phone' => true,
-        'company_id' => true,
-        'company' => true
+        'user_id' => true,
+        'user' => true
     ];
 }

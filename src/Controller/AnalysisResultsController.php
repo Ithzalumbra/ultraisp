@@ -29,7 +29,12 @@ class AnalysisResultsController extends AppController
         $this->paginate = [
             'contain' => ['AnalysisSamples', 'AnalysisTypes']
         ];
-        $analysisResults = $this->paginate($this->AnalysisResults);
+        if($this->getCurrentUser()['usertype_id'] != 1 || $this->getCurrentUser()['usertype_id'] != 2 || $this->getCurrentUser()['usertype_id'] != 4){
+            $analysisResults = $this->AnalysisResults->find()->where(['user_id' => $this->getCurrentUser()['id']]);
+        }
+        else {
+            $analysisResults = $this->AnalysisResults->find('all');
+        }
 
         $this->set(compact('analysisResults'));
     }
@@ -116,5 +121,19 @@ class AnalysisResultsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function details()
+    {
+        $idResult =$this->request->params['id'];
+
+        if($this->getCurrentUser()['usertype_id'] != 1 || $this->getCurrentUser()['usertype_id'] != 2 || $this->getCurrentUser()['usertype_id'] != 4){
+            $analysisDetails = $this->AnalysisResults->find()->where(['AnalysisResults.id' => $idResult])->contain(['AnalysisTypes']);
+        }
+        else {
+            $analysisDetails = $this->AnalysisResults->find('all');
+        }
+        $this->set(compact('analysisDetails'));
+
     }
 }

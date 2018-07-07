@@ -10,10 +10,11 @@ use Cake\ORM\Entity;
  * @property int $ppm
  * @property \Cake\I18n\FrozenDate $date_register
  * @property bool $status
- * @property string $employee_rut
+ * @property int $user_id
  * @property int $analysisSamples_id
  * @property int $analysisType_id
  *
+ * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\AnalysisSample $analysis_sample
  * @property \App\Model\Entity\AnalysisType $analysis_type
  */
@@ -33,9 +34,10 @@ class AnalysisResult extends Entity
         'ppm' => true,
         'date_register' => true,
         'status' => true,
-        'employee_rut' => true,
+        'user_id' => true,
         'analysisSamples_id' => true,
         'analysisType_id' => true,
+        'user' => true,
         'analysis_sample' => true,
         'analysis_type' => true
     ];

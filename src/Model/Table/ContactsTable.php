@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Contacts Model
  *
- * @property \App\Model\Table\CompaniesTable|\Cake\ORM\Association\BelongsTo $Companies
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\Contact get($primaryKey, $options = [])
  * @method \App\Model\Entity\Contact newEntity($data = null, array $options = [])
@@ -37,8 +37,8 @@ class ContactsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('rut');
 
-        $this->belongsTo('Companies', [
-            'foreignKey' => 'company_id',
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -86,7 +86,7 @@ class ContactsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['company_id'], 'Companies'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
     }

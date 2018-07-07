@@ -11,7 +11,6 @@ use Cake\ORM\Entity;
  * @property float $temperatureSample
  * @property int $quantitySample
  * @property int $user_id
- * @property string $employee_rut
  *
  * @property \App\Model\Entity\User $user
  */
@@ -32,7 +31,6 @@ class AnalysisSample extends Entity
         'temperatureSample' => true,
         'quantitySample' => true,
         'user_id' => true,
-        'employee_rut' => true,
         'user' => true
     ];
 }

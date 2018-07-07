@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * AnalysisResults Model
  *
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\AnalysisSamplesTable|\Cake\ORM\Association\BelongsTo $AnalysisSamples
  * @property \App\Model\Table\AnalysisTypesTable|\Cake\ORM\Association\BelongsTo $AnalysisTypes
  *
@@ -38,6 +39,10 @@ class AnalysisResultsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('AnalysisSamples', [
             'foreignKey' => 'analysisSamples_id',
             'joinType' => 'INNER'
@@ -75,12 +80,6 @@ class AnalysisResultsTable extends Table
             ->requirePresence('status', 'create')
             ->notEmpty('status');
 
-        $validator
-            ->scalar('employee_rut')
-            ->maxLength('employee_rut', 12)
-            ->requirePresence('employee_rut', 'create')
-            ->notEmpty('employee_rut');
-
         return $validator;
     }
 
@@ -93,6 +92,7 @@ class AnalysisResultsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['analysisSamples_id'], 'AnalysisSamples'));
         $rules->add($rules->existsIn(['analysisType_id'], 'AnalysisTypes'));
 

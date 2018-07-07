@@ -12,6 +12,7 @@
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
@@ -28,7 +29,7 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
-    private $_currentUser = null;
+    public $currentUser = null;
 
     /**
      * Initialization hook method.
@@ -50,18 +51,18 @@ class AppController extends Controller
 
         $this->loadComponent('Auth', [
             'loginAction' => [
-               'controller' => 'Users',
-               'action' => 'login'
+                'controller' => 'Users',
+                'action' => 'login'
             ],
             'loginRedirect' => [
-               'controller' => 'Users',
-               'action' => 'index'
+                'controller' => 'AnalysisResults',
+                'action' => 'index'
             ],
             'logoutRedirect' => [
-               'controller' => 'Users',
-               'action' => 'logout'
+                'controller' => 'AnalysisResults',
+                'action' => 'index'
             ],
-            'authError' => 'No puedes acceder a esa sección.',
+            'authError' => '',
             'flash' => [
                 'element' => 'error'
             ],
@@ -71,12 +72,11 @@ class AppController extends Controller
                     'fields' => ['username' => 'rut', 'password' => 'password']
                 ]
             ]
-       ]);
+        ]);
         $this->Auth->allow([
-          'login'
-
-       ]);
-
+            'login',
+            'register'
+        ]);
 
 
         /*
@@ -86,17 +86,21 @@ class AppController extends Controller
         //$this->loadComponent('Security');
     }
 
-    public function beforeFilter(Event $event){
-        if($this->Auth->user() !== null) {
+    public function beforeFilter(Event $event)
+    {
+        if ($this->Auth->user() !== null) {
             $this->set('currentUser', $this->Auth->user());
             $this->currentUser = $this->Auth->user();
-            if($this->request->getParam("action") == 'login'){
+            if ($this->request->getParam("action") == 'login') {
                 $this->redirect(['controller' => 'Users', 'action' => 'index']);
             }
         }
+        else
+            $this->set('currentUser', null);
     }
 
     protected function getCurrentUser(){
         return $this->currentUser;
     }
+
 }
