@@ -21,3 +21,5 @@ Instituto de Salud Pública de Chile
 6.- En la carpeta config modificar el archivo app.php donde dice 'Datasources', 'default' cambiar los datos a la base de datos local.
 
 7.- El programa esta listo
+
+Activar el short_open_tag en las configuracion de php.ini o sino no va a funcionar como se debe.
