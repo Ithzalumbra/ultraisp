@@ -6,7 +6,6 @@ use Cake\ORM\Entity;
 /**
  * AnalysisResult Entity
  *
- * @property int $id
  * @property int $ppm
  * @property \Cake\I18n\FrozenDate $date_register
  * @property bool $status
@@ -35,8 +34,6 @@ class AnalysisResult extends Entity
         'date_register' => true,
         'status' => true,
         'user_id' => true,
-        'analysisSamples_id' => true,
-        'analysisType_id' => true,
         'user' => true,
         'analysis_sample' => true,
         'analysis_type' => true

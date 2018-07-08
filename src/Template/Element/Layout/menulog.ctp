@@ -26,7 +26,7 @@
                                 </li>
                             <? endif; ?>
                             <li class="nav-item">
-                                <?= $this->Html->link('<i class="fas fa-home"></i> MUESTRAS', '/muestras', ['escape' => false, 'class' => 'nav-link']) ?>
+                                <?= $this->Html->link('<i class="fas fa-flask"></i> MUESTRAS', '/muestras', ['escape' => false, 'class' => 'nav-link']) ?>
                             </li>
                             <li class="nav-item">
                                 <?= $this->Html->link('<i class="fas fa-sign-out-alt "></i> CERRAR SESION', '/logout', ['escape' => false, 'class' => 'nav-link']) ?>

@@ -51,6 +51,12 @@ class AnalysisResultsTable extends Table
             'foreignKey' => 'analysisType_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->addBehavior('Search.Search');
+        $this->searchManager()
+            ->add('analysisSamples_id', 'Search.Like', [
+                'field' => ['analysisSamples_id']
+            ]);
     }
 
     /**
@@ -61,10 +67,6 @@ class AnalysisResultsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
-
         $validator
             ->integer('ppm')
             ->requirePresence('ppm', 'create')

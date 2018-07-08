@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -13,12 +14,19 @@ use App\Controller\AppController;
 class AnalysisResultsController extends AppController
 {
 
-    public function initialize(){
+    public function initialize()
+    {
         parent::initialize();
+        $this->loadComponent('Search.Prg', [
+            'actions' => ['index']
+        ]);
         $this->Auth->allow('home');
     }
 
-    public function home(){}
+    public function home()
+    {
+    }
+
     /**
      * Index method
      *
@@ -26,16 +34,20 @@ class AnalysisResultsController extends AppController
      */
     public function index()
     {
+
         $this->paginate = [
             'contain' => ['AnalysisSamples', 'AnalysisTypes']
         ];
-        if($this->getCurrentUser()['usertype_id'] != 1 || $this->getCurrentUser()['usertype_id'] != 2 || $this->getCurrentUser()['usertype_id'] != 4){
-            $analysisResults = $this->AnalysisResults->find()->where(['user_id' => $this->getCurrentUser()['id']]);
-        }
-        else {
-            $analysisResults = $this->AnalysisResults->find('all');
+
+        if ($this->getCurrentUser()['usertype_id'] != 1 || $this->getCurrentUser()['usertype_id'] != 2 || $this->getCurrentUser()['usertype_id'] != 4) {
+            $analysisResults = $this->AnalysisResults->find('search', ['search' => $this->request->query])->where(['AnalysisResults.user_id' => $this->getCurrentUser()['id']])->group('analysisSamples_id');
         }
 
+        else {
+            $analysisResults = $this->AnalysisResults->find('search', ['search' => $this->request->query]);
+        }
+
+        $analysisResults = $this->paginate($analysisResults);
         $this->set(compact('analysisResults'));
     }
 
@@ -125,15 +137,23 @@ class AnalysisResultsController extends AppController
 
     public function details()
     {
-        $idResult =$this->request->params['id'];
-
-        if($this->getCurrentUser()['usertype_id'] != 1 || $this->getCurrentUser()['usertype_id'] != 2 || $this->getCurrentUser()['usertype_id'] != 4){
-            $analysisDetails = $this->AnalysisResults->find()->where(['AnalysisResults.id' => $idResult])->contain(['AnalysisTypes']);
-        }
-        else {
+        $idResult = $this->request->params['id'];
+        if ($this->getCurrentUser()['usertype_id'] != 1 || $this->getCurrentUser()['usertype_id'] != 2 || $this->getCurrentUser()['usertype_id'] != 4) {
+            $analysisDetails = $this->AnalysisResults->find()->where(['AnalysisResults.analysisSamples_id' => $idResult])->contain(['AnalysisTypes']);
+        } else {
             $analysisDetails = $this->AnalysisResults->find('all');
         }
-        $this->set(compact('analysisDetails'));
+        $names = null;
+        $ppms = null;
+        foreach ($analysisDetails as $key => $asam) {
+            $names =  $names.'\''.$asam->analysis_type->name.'\''.', ';
+            $ppms = $ppms.$asam->ppm.', ';
+        }
+        $names = substr($names, 0, -2);
+        $ppms = substr($ppms, 0, -2);
+
+        $data = ['name' => $names, 'ppm' => $ppms];
+        $this->set(compact('analysisDetails', 'data'));
 
     }
 }
