@@ -35,7 +35,7 @@ class AnalysisResult extends Entity
         'status' => true,
         'user_id' => true,
         'user' => true,
-        'analysis_sample' => true,
-        'analysis_type' => true
+        'analysisSamples_id' => true,
+        'analysisType_id' => true
     ];
 }

@@ -13,6 +13,14 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Search.Prg', [
+            'actions' => ['index']
+        ]);
+    }
+
     /**
      * Index method
      *
@@ -23,7 +31,7 @@ class UsersController extends AppController
         $this->paginate = [
             'contain' => ['Usertypes']
         ];
-        $users = $this->paginate($this->Users);
+        $users = $this->Users->find('search', ['search' => $this->request->query])->contain('Usertypes');
 
         $this->set(compact('users'));
     }
@@ -74,17 +82,18 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+        $id = $this->request->params['id'];
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Los datos se han guardado correctamente.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect('/perfil/'.$this->getCurrentUser()['id']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('Ha ocurrido un error.'));
         }
         $usertypes = $this->Users->Usertypes->find('list', ['limit' => 200]);
         $this->set(compact('user', 'usertypes'));
@@ -143,7 +152,6 @@ class UsersController extends AppController
                         $phone = $this->Users->Phones->newEntity();
                         $phone->phone =  $this->request->data['phone'];
                         $phone->user_id = $user->id;
-                        pr($phone);
                         if ($this->Users->Phones->save($phone)) {
 
                         }
@@ -168,5 +176,48 @@ class UsersController extends AppController
         }
 //        $usertypes = $this->Users->Usertypes->find('list', ['limit' => 200]);
 //        $this->set(compact('user', 'usertypes'));
+    }
+
+    public function extras($id = null)
+    {
+        if  ($this->getCurrentUser()['usertype_id']  == 3){
+            $data = $this->Users->Contacts->find('all')->where(['user_id' => $this->getCurrentUser()['id']]);
+        }
+        else {
+            $data = $this->Users->Phones->find('all')->where(['user_id' => $this->getCurrentUser()['id']]);
+        }
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+
+            if  ($this->getCurrentUser()['usertype_id']  == 3){
+
+
+                $contacts = $this->Users->Contacts->newEntities($this->request->data['contact']);
+                foreach ($contacts as $con){
+                    $con->user_id = $this->getCurrentUser()['id'];
+                }
+                if ($this->Users->Contacts->saveMany($contacts)) {
+                    $this->Flash->success(__('Los contactos se han guardado correctamente.'));
+
+                    return $this->redirect('/perfil/'.$this->getCurrentUser()['id']);
+                }
+                $this->Flash->error(__('Ha ocurrido un error.'));
+            }
+            else {
+
+                $phones = $this->Users->Phones->newEntities($this->request->data['phone']);
+                foreach ($phones as $con){
+                    $con->user_id = $this->getCurrentUser()['id'];
+                }
+                if ($this->Users->Phones->saveMany($phones)) {
+                    $this->Flash->success(__('Los telefonos se han guardado correctamente.'));
+
+                    return $this->redirect('/perfil/'.$this->getCurrentUser()['id']);
+                }
+                $this->Flash->error(__('Ha ocurrido un error.'));
+            }
+
+        }
+        $this->set(compact('data'));
     }
 }

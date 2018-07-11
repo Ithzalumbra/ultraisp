@@ -7,7 +7,9 @@
                 <nav class="navbar navbar-expand-lg fixed-top">
 
                     <?= $this->Html->link(
-                        $this->Html->image('logo-head.png',[ 'width' => '200', 'class' => 'img-fluid']),'/', ['escape' => false]
+                        $this->Html->image('logo-head.png',[ 'width' => '200', 'class' => 'img-fluid']),
+                        '#',
+                        ['class' => 'navbar-brand col-4 col-md-4', 'escape' => false]
                     )?>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

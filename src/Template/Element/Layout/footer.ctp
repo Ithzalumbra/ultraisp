@@ -22,7 +22,7 @@
                     </ul>
                 </div>
                 <div class="col-12 col-md-5 mb-3 mb-md-0">
-                    <img class="img-fluid" src="img/logo-foot.png" width="150" alt="">
+                    <img class="img-fluid" src="/img/logo-foot.png" width="150" alt="">
                 </div>
             </div>
         </div>

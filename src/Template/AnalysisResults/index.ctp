@@ -19,6 +19,12 @@
                     ['action' => 'index'],
                     ['class' => 'btn btn-outline-info', 'escape' => false])
                 ?>
+                <? if ($currentUser['usertype_id'] == 3 || $currentUser['usertype_id'] == 5): ?>
+                    <?= $this->Html->link('<i class="fas fa-plus"></i> Agregar Muestra',
+                        ['controller' => 'AnalysisSamples','action' => 'add'],
+                        ['class' => 'btn btn-outline-info', 'escape' => false])
+                    ?>
+                <? endif; ?>
                 <?=$this->Form->end();?>
                 </div>
             </div>

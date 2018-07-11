@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
+use Cake\ORM\TableRegistry;
 
 /**
  * AnalysisSamples Controller
@@ -52,61 +55,90 @@ class AnalysisSamplesController extends AppController
     public function add()
     {
         $analysisSample = $this->AnalysisSamples->newEntity();
+        $anal = TableRegistry::get('AnalysisTypes');
+        $analysisT = $anal->find('list');
         if ($this->request->is('post')) {
+
             $analysisSample = $this->AnalysisSamples->patchEntity($analysisSample, $this->request->getData());
+            $analysisSample->user_id = $this->getCurrentUser()['id'];
             if ($this->AnalysisSamples->save($analysisSample)) {
-                $this->Flash->success(__('The analysis sample has been saved.'));
+
+                $types = $this->request->data['analysistypes'];
+                $analysisResultsTable = TableRegistry::get('AnalysisResults');
+                $analysisResults = $analysisResultsTable->newEntities($types);
+                $aux = 0;
+                foreach ($analysisResults as $res) {
+                    $res->ppm = 0;
+                    $res->date_register = $time = Time::now();
+                    $res->status = 0;
+                    $res->user_id = $this->getCurrentUser()['id'];
+                    $res->analysisSamples_id = $analysisSample->id;
+                    $res->dirty('analysis_type', true);
+                }
+                foreach ($types as $t) {
+                    $analysisResults[$aux]->analysisType_id = $t['analysis_type'];
+                    $aux++;
+                }
+
+                $this->Flash->success(__('La muestras han sido ingresadas correctamente.'));
+//                pr($analysisResults); die;
+                if($analysisResultsTable->saveMany($analysisResults))
+                {
+                    $this->Flash->success(__('La tipos de prueba han sido ingresadas correctamente.'));
+                }
 
                 return $this->redirect(['action' => 'index']);
+                 }
+                $this->Flash->error(__('The analysis sample could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The analysis sample could not be saved. Please, try again.'));
+            $users = $this->AnalysisSamples->Users->find('list', ['limit' => 200]);
+            $this->set(compact('analysisSample', 'users', 'analysisT'));
         }
-        $users = $this->AnalysisSamples->Users->find('list', ['limit' => 200]);
-        $this->set(compact('analysisSample', 'users'));
-    }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Analysis Sample id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $analysisSample = $this->AnalysisSamples->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $analysisSample = $this->AnalysisSamples->patchEntity($analysisSample, $this->request->getData());
-            if ($this->AnalysisSamples->save($analysisSample)) {
-                $this->Flash->success(__('The analysis sample has been saved.'));
+        /**
+         * Edit method
+         *
+         * @param string|null $id Analysis Sample id.
+         * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+         * @throws \Cake\Network\Exception\NotFoundException When record not found.
+         */
+        public
+        function edit($id = null)
+        {
+            $analysisSample = $this->AnalysisSamples->get($id, [
+                'contain' => []
+            ]);
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $analysisSample = $this->AnalysisSamples->patchEntity($analysisSample, $this->request->getData());
+                if ($this->AnalysisSamples->save($analysisSample)) {
+                    $this->Flash->success(__('The analysis sample has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The analysis sample could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The analysis sample could not be saved. Please, try again.'));
-        }
-        $users = $this->AnalysisSamples->Users->find('list', ['limit' => 200]);
-        $this->set(compact('analysisSample', 'users'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Analysis Sample id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $analysisSample = $this->AnalysisSamples->get($id);
-        if ($this->AnalysisSamples->delete($analysisSample)) {
-            $this->Flash->success(__('The analysis sample has been deleted.'));
-        } else {
-            $this->Flash->error(__('The analysis sample could not be deleted. Please, try again.'));
+            $users = $this->AnalysisSamples->Users->find('list', ['limit' => 200]);
+            $this->set(compact('analysisSample', 'users'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        /**
+         * Delete method
+         *
+         * @param string|null $id Analysis Sample id.
+         * @return \Cake\Http\Response|null Redirects to index.
+         * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+         */
+        public
+        function delete($id = null)
+        {
+            $this->request->allowMethod(['post', 'delete']);
+            $analysisSample = $this->AnalysisSamples->get($id);
+            if ($this->AnalysisSamples->delete($analysisSample)) {
+                $this->Flash->success(__('The analysis sample has been deleted.'));
+            } else {
+                $this->Flash->error(__('The analysis sample could not be deleted. Please, try again.'));
+            }
+
+            return $this->redirect(['action' => 'index']);
+        }
     }
-}

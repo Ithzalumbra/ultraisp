@@ -57,6 +57,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('/registro', ['controller' => 'Users', 'action' => 'register']);
+    $routes->connect('/usuario', ['controller' => 'Users', 'action' => 'index']);
+    $routes->connect('/usuario/:id/otros', ['controller' => 'Users', 'action' => 'view']);
+    $routes->connect('/perfil/:id', ['controller' => 'Users', 'action' => 'edit']);
+    $routes->connect('/perfil/:id/otros', ['controller' => 'Users', 'action' => 'extras']);
     $routes->connect('/muestras', ['controller' => 'AnalysisResults', 'action' => 'index']);
     $routes->connect('/muestras/detalles/:id', ['controller' => 'AnalysisResults', 'action' => 'details']);
 
@@ -69,7 +73,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * Connect catchall routes for all controllers.
      *
      * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
-     *    `$routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'DashedRoute']);`
+     *    ` $routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'DashedRoute']);`
      *    `$routes->connect('/:controller/:action/*', [], ['routeClass' => 'DashedRoute']);`
      *
      * Any route class can be used with this method, such as:

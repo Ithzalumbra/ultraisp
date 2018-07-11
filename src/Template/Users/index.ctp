@@ -1,63 +1,73 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Usertypes'), ['controller' => 'UserTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Usertype'), ['controller' => 'UserTypes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Analysis Samples'), ['controller' => 'AnalysisSamples', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Analysis Sample'), ['controller' => 'AnalysisSamples', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users index large-9 medium-8 columns content">
-    <h3><?= __('Users') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('rut') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('password') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('address') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('status') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('usertype_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user): ?>
-            <tr>
-                <td><?= $this->Number->format($user->id) ?></td>
-                <td><?= h($user->rut) ?></td>
-                <td><?= h($user->name) ?></td>
-                <td><?= h($user->password) ?></td>
-                <td><?= h($user->address) ?></td>
-                <td><?= h($user->email) ?></td>
-                <td><?= h($user->status) ?></td>
-                <td><?= $user->has('usertype') ? $this->Html->link($user->usertype->name, ['controller' => 'UserTypes', 'action' => 'view', $user->usertype->id]) : '' ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<section id="m-search" class="pb-3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h2>Usuarios</h2>
+            </div>
+
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-3 mb-md-0">
+                <?= $this->Form->create(); ?>
+                <?= $this->Form->control('rut', ['class' => 'form-control', 'placeholder' => 'RUT', 'label' => false, 'type' => 'text']); ?>
+            </div>
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-3 mb-md-0">
+                <?= $this->Form->control('name', ['class' => 'form-control', 'placeholder' => 'Nombre', 'label' => false, 'type' => 'text']); ?>
+            </div>
+            <div class="col-12 col-sm-3 col-md-2">
+                <div class="btn-group" role="group">
+                    <?= $this->Form->button('Buscar', [
+                        'type' => 'submit',
+                        'class' => 'btn w-100'])
+                    ?>
+                    <?= $this->Html->link('<i class="fas fa-broom"></i> Limpiar',
+                        ['action' => 'index'],
+                        ['class' => 'btn btn-outline-info', 'escape' => false])
+                    ?>
+                    <?= $this->Html->link('<i class="fas fa-plus"></i> Agregar Usuario',
+                        ['action' => 'add'],
+                        ['class' => 'btn btn-outline-info', 'escape' => false])
+                    ?>
+                    <?= $this->Form->end(); ?>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-8 mt-3">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">RUT</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Tipo de usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <? if ($users != null): ?>
+
+                        <? foreach ($users as $user): ?>
+                            <tr>
+                                <td><?= $this->Number->format($user->id) ?></td>
+                                <td><?= h($user->rut) ?></td>
+                                <td><?= h($user->name) ?></td>
+                                <td><?= h($user->address) ?></td>
+                                <td><?= $user->email != null ? $user->email : 'No tiene' ?></td>
+                                <td><?= $user->status == 1 ? 'Habilitado' : 'Deshabilitado' ?></td>
+                                <td><?= h($user->UserTypes['name'])?></td>
+
+                            </tr>
+                        <? endforeach; ?>
+                    <? else: ?>
+                        <tr>
+                            <td colspan="2">No se encontro ningun registro</td>
+                        </tr>
+                    <? endif; ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
     </div>
-</div>
+</section>

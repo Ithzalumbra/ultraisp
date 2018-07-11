@@ -23,9 +23,7 @@ class AnalysisResultsController extends AppController
         $this->Auth->allow('home');
     }
 
-    public function home()
-    {
-    }
+    public function home(){}
 
     /**
      * Index method

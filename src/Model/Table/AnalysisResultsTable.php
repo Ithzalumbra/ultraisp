@@ -37,12 +37,15 @@ class AnalysisResultsTable extends Table
 
         $this->setTable('analysis_results');
         $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+
+        $this->setPrimaryKey('analysisSamples_id');
+        $this->setPrimaryKey('analysisType_id');
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
+
         $this->belongsTo('AnalysisSamples', [
             'foreignKey' => 'analysisSamples_id',
             'joinType' => 'INNER'
@@ -53,6 +56,7 @@ class AnalysisResultsTable extends Table
         ]);
 
         $this->addBehavior('Search.Search');
+
         $this->searchManager()
             ->add('analysisSamples_id', 'Search.Like', [
                 'field' => ['analysisSamples_id']
@@ -95,9 +99,12 @@ class AnalysisResultsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
-        $rules->add($rules->existsIn(['analysisSamples_id'], 'AnalysisSamples'));
-        $rules->add($rules->existsIn(['analysisType_id'], 'AnalysisTypes'));
 
         return $rules;
+    }
+
+    public function beforeSave($event, $entity, $options) {
+        $entity->analysis_sample = (int)$event->data['entity']->analysis_sample;
+        $entity->analysis_type = (int)$event->data['entity']->analysis_type;
     }
 }

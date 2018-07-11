@@ -7,8 +7,10 @@
                 <nav class="navbar navbar-expand-lg fixed-top">
 
                     <?= $this->Html->link(
-                        $this->Html->image('logo-head.png', ['width' => '200', 'class' => 'img-fluid']), '/', ['escape' => false]
-                    ) ?>
+                        $this->Html->image('logo-head.png',[ 'width' => '200', 'class' => 'img-fluid']),
+                        '/',
+                        ['class' => 'navbar-brand col-4 col-md-4', 'escape' => false]
+                    )?>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -20,9 +22,13 @@
                             <li class="nav-item">
                                 <?= $this->Html->link('<i class="fas fa-home"></i> INICIO', '/', ['escape' => false, 'class' => 'nav-link']) ?>
                             </li>
-                            <? if ($currentUser['id'] == 1): ?>
+                            <? if ($currentUser['usertype_id'] == 1): ?>
                                 <li class="nav-item">
-                                    <?= $this->Html->link('<i class="fas fa-home"></i> USUARIOS', '/usuarios', ['escape' => false, 'class' => 'nav-link']) ?>
+                                    <?= $this->Html->link('<i class="fas fa-users"></i> USUARIOS', '/usuario', ['escape' => false, 'class' => 'nav-link']) ?>
+                                </li>
+                            <? else: ?>
+                                <li class="nav-item">
+                                    <?= $this->Html->link('<i class="fas fa-user"></i> PERFIL', '/perfil/'.$currentUser['id'], ['escape' => false, 'class' => 'nav-link']) ?>
                                 </li>
                             <? endif; ?>
                             <li class="nav-item">

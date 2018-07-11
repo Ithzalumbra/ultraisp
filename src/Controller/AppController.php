@@ -60,7 +60,7 @@ class AppController extends Controller
             ],
             'logoutRedirect' => [
                 'controller' => 'AnalysisResults',
-                'action' => 'index'
+                'action' => 'home'
             ],
             'authError' => '',
             'flash' => [

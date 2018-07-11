@@ -59,19 +59,19 @@ class UsersTable extends Table
             'foreignKey' => 'user_id'
         ]);
 
-//        $this->addBehavior('Search.Search');
-//
-//        $this->searchManager()
-//            ->add('name', 'Search.Like', [
-//                'before' => true,
-//                'after' => true,
-//                'comparison' => 'LIKE',
-//                'wildcardAny' => '*',
-//                'field' => ['name', 'lastname','lastname2']
-//            ])
-//            ->add('status', 'Search.Like', [
-//                'field' => ['active']
-//            ]);
+        $this->addBehavior('Search.Search');
+
+        $this->searchManager()
+            ->add('name', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'comparison' => 'LIKE',
+                'wildcardAny' => '*',
+                'field' => ['name']
+            ])
+            ->add('rut', 'Search.Like', [
+                'field' => ['rut']
+            ]);
     }
 
     /**
