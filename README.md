@@ -23,3 +23,5 @@ Instituto de Salud Pública de Chile
 7.- El programa esta listo
 
 Activar el short_open_tag en las configuracion de php.ini o sino no va a funcionar como se debe.
+
+set global sql_mode='';
