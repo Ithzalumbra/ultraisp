@@ -1,6 +1,6 @@
 <section id="m-reception" class="pb-3">
     <div class="container">
-        <?= $this->Form->create('') ?>
+        <?php echo $this->Form->create('') ?>
         <div class="row justify-content-center">
             <div class="col-12 text-center">
                 <h2>Recepci&oacute;n de Muestras</h2>
@@ -9,31 +9,31 @@
             <div class="col-12 col-md-8 col-xl-6">
                 <h5>Datos Cliente</h5>
                 <div class="form-group">
-                    <?= $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Código Cliente', 'disabled' => true, 'value' => $currentUser['id']]) ?>
+                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Código Cliente', 'disabled' => true, 'value' => $currentUser['id']]) ?>
                 </div>
                 <div class="form-group">
-                    <?= $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Rut Cliente', 'disabled' => true, 'value' => $currentUser['rut']]) ?>
+                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Rut Cliente', 'disabled' => true, 'value' => $currentUser['rut']]) ?>
                 </div>
                 <div class="form-group">
-                    <?= $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre Cliente', 'disabled' => true, 'value' => $currentUser['name']]) ?>
+                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre Cliente', 'disabled' => true, 'value' => $currentUser['name']]) ?>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-xl-4">
                 <h5>Fecha De Recepci&oacute;n</h5>
                 <div class="form-group">
-                    <?= $this->Form->control('temperatureSample', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Temperatura de Muestra', 'required']) ?>
+                    <?php echo $this->Form->control('temperatureSample', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Temperatura de Muestra', 'required']) ?>
                 </div>
                 <div class="form-group">
-                    <?= $this->Form->control('quantitySample', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Cantidad de Muestra', 'required']) ?>
+                    <?php echo $this->Form->control('quantitySample', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Cantidad de Muestra', 'required']) ?>
                 </div>
                 <div class="form-group">
-                    <?= $this->Form->control('date', ['class' => 'form-control datepicker', 'label' => false, 'required', 'placeholder' => 'Fecha de rececion de muestra']) ?>
+                    <?php echo $this->Form->control('date', ['class' => 'form-control datepicker', 'label' => false, 'required', 'placeholder' => 'Fecha de rececion de muestra']) ?>
                 </div>
             </div>
             <div class="col-12 col-lg-10">
                 <h5>Tipo de An&aacute;lisis a Realizar</h5>
                 <div class="form-group">
-                    <?= $this->Form->control('', ['options' => $analysisT, 'class' => 'form-control', 'label' => false, 'placeholder' => 'Cantidad de Muestra', 'required', 'id' => 'ultraselect']) ?>
+                    <?php echo $this->Form->control('', ['options' => $analysisT, 'class' => 'form-control', 'label' => false, 'placeholder' => 'Cantidad de Muestra', 'required', 'id' => 'ultraselect']) ?>
                 </div>
                 <button type="button" class="btn mb-3" onclick="addLi()">Agregar</button>
                 <div class="form-group">
@@ -47,7 +47,7 @@
             </div>
 
         </div>
-        <?= $this->Form->end() ?>
+        <?php echo $this->Form->end() ?>
     </div>
 </section>
 <script>

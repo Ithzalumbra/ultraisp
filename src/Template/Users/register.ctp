@@ -8,16 +8,16 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <form action="" method="post">
                     <div class="form-group">
-                        <?= $this->Form->control('rut', ['class' => 'form-control', 'label' => false, 'placeholder' => 'RUT', 'required']) ?>
+                        <?php echo  $this->Form->control('rut', ['class' => 'form-control', 'label' => false, 'placeholder' => 'RUT', 'required']) ?>
                     </div>
                     <div class="form-group">
-                        <?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre', 'required']) ?>
+                        <?php echo  $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre', 'required']) ?>
                     </div>
                     <div class="form-group">
-                        <?= $this->Form->control('password', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Contraseña', 'required']) ?>
+                        <?php echo  $this->Form->control('password', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Contraseña', 'required']) ?>
                     </div>
                     <div class="form-group">
-                        <?= $this->Form->control('address', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Direccion', 'required']) ?>
+                        <?php echo  $this->Form->control('address', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Direccion', 'required']) ?>
                     </div>
                     <div class="form-group">
                         <?php
@@ -39,9 +39,9 @@
                                id="check">
                         <label class="form-check-label" for="check"><p>Acepto los t&eacute;rminos</p></label>
                     </div>
-                    <?= $this->Form->submit('Registrarse', ['class' => 'btn w-100']) ?>
+                    <?php echo  $this->Form->submit('Registrarse', ['class' => 'btn w-100']) ?>
                     <br><br>
-                    <p class="text-center"><?= $this->Html->link('Ya tienes una cuenta? Login acá.', '/login') ?></p>
+                    <p class="text-center"><?php echo  $this->Html->link('Ya tienes una cuenta? Login acá.', '/login') ?></p>
                 </form>
             </div>
         </div>
@@ -64,7 +64,7 @@
     function slaido(x) {
         if (x === '5') {
             $('#particular').hide(function () {
-                $('#particular').append('<div class="form-group particular"><?=$this->Form->control('phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Telefono contacto', 'required'])?></div><div class="form-group particular"><?= $this->Form->control('email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Email', 'type' => 'email', 'required']) ?></div>');
+                $('#particular').append('<div class="form-group particular"><?php echo $this->Form->control('phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Telefono contacto', 'required'])?></div><div class="form-group particular"><?php echo  $this->Form->control('email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Email', 'type' => 'email', 'required']) ?></div>');
                 $('#particular').slideDown(500);
             });
             $('#empresa').slideUp(500, function () {
@@ -73,7 +73,7 @@
 
         } else {
             $('#empresa').hide(function () {
-                $('#empresa').append('<div class="form-group empresa"><?=$this->Form->control('contact.rut', ['class' => 'form-control', 'label' => false, 'placeholder' => 'RUT contacto', 'required'])?></div><div class="form-group empresa"><?=$this->Form->control('contact.name', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre contacto', 'required'])?></div><div class="form-group empresa"><?=$this->Form->control('contact.email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Correo contacto', 'required'])?></div><div class="form-group empresa"><?=$this->Form->control('contact.phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Telefono contacto', 'required'])?></div>');
+                $('#empresa').append('<div class="form-group empresa"><?php echo $this->Form->control('contact.rut', ['class' => 'form-control', 'label' => false, 'placeholder' => 'RUT contacto', 'required'])?></div><div class="form-group empresa"><?php echo $this->Form->control('contact.name', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre contacto', 'required'])?></div><div class="form-group empresa"><?php echo $this->Form->control('contact.email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Correo contacto', 'required'])?></div><div class="form-group empresa"><?php echo $this->Form->control('contact.phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Telefono contacto', 'required'])?></div>');
                 $('#empresa').slideDown(500);
             });
             $('#particular').slideUp(500, function () {

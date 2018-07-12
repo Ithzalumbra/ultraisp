@@ -6,24 +6,24 @@
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
+        <li class="heading"><?php echo  __('Actions') ?></li>
+        <li><?php echo  $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $analysisResult->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $analysisResult->id)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Analysis Results'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Analysis Samples'), ['controller' => 'AnalysisSamples', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Analysis Sample'), ['controller' => 'AnalysisSamples', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Analysis Types'), ['controller' => 'AnalysisTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Analysis Type'), ['controller' => 'AnalysisTypes', 'action' => 'add']) ?></li>
+        <li><?php echo  $this->Html->link(__('List Analysis Results'), ['action' => 'index']) ?></li>
+        <li><?php echo  $this->Html->link(__('List Analysis Samples'), ['controller' => 'AnalysisSamples', 'action' => 'index']) ?></li>
+        <li><?php echo  $this->Html->link(__('New Analysis Sample'), ['controller' => 'AnalysisSamples', 'action' => 'add']) ?></li>
+        <li><?php echo  $this->Html->link(__('List Analysis Types'), ['controller' => 'AnalysisTypes', 'action' => 'index']) ?></li>
+        <li><?php echo  $this->Html->link(__('New Analysis Type'), ['controller' => 'AnalysisTypes', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="analysisResults form large-9 medium-8 columns content">
-    <?= $this->Form->create($analysisResult) ?>
+    <?php echo  $this->Form->create($analysisResult) ?>
     <fieldset>
-        <legend><?= __('Edit Analysis Result') ?></legend>
+        <legend><?php echo  __('Edit Analysis Result') ?></legend>
         <?php
             echo $this->Form->control('ppm');
             echo $this->Form->control('date_register');
@@ -33,6 +33,6 @@
             echo $this->Form->control('analysisType_id', ['options' => $analysisTypes]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+    <?php echo  $this->Form->button(__('Submit')) ?>
+    <?php echo  $this->Form->end() ?>
 </div>

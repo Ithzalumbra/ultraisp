@@ -20,13 +20,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <? foreach ($analysisDetails as $asam): ?>
+                    <?php foreach ($analysisDetails as $asam): ?>
 
                         <tr>
-                            <td><?= h($asam->analysis_type->name) ?></td>
-                            <td><?= h($asam->ppm) ?></td>
+                            <td><?php echo h($asam->analysis_type->name) ?></td>
+                            <td><?php echo h($asam->ppm) ?></td>
                         </tr>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -40,10 +40,10 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [<?=$data['name']?>],
+            labels: [<?php echo $data['name']?>],
             datasets: [{
                 label: '# of Votes',
-                data: [<?=$data['ppm']?>],
+                data: [<?php echo $data['ppm']?>],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

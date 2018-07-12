@@ -9,14 +9,14 @@
             </div>
             <div class="col-8">
 
-                <?=$this->Form->create($analysisType)?>
-                <?= $this->Form->control('name',['class' => 'form-control', 'div' => false, 'label' => false, 'placeholder' => 'Nombre tipo de analisis'])?>
+                <?php echo$this->Form->create($analysisType)?>
+                <?php echo $this->Form->control('name',['class' => 'form-control', 'div' => false, 'label' => false, 'placeholder' => 'Nombre tipo de analisis'])?>
                 <br>
-                <?= $this->Form->button('Guardar', [
+                <?php echo $this->Form->button('Guardar', [
                     'type' => 'submit',
                     'class' => 'btn '])
                 ?>
-                <?=$this->Form->end()?>
+                <?php echo$this->Form->end()?>
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
 
                 <nav class="navbar navbar-expand-lg fixed-top">
 
-                    <?= $this->Html->link(
+                    <?php echo $this->Html->link(
                         $this->Html->image('logo-head.png',[ 'width' => '200', 'class' => 'img-fluid']),
                         '/',
                         ['class' => 'navbar-brand col-4 col-md-4', 'escape' => false]
@@ -20,22 +20,22 @@
 
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <?= $this->Html->link('<i class="fas fa-home"></i> INICIO', '/', ['escape' => false, 'class' => 'nav-link']) ?>
+                                <?php echo $this->Html->link('<i class="fas fa-home"></i> INICIO', '/', ['escape' => false, 'class' => 'nav-link']) ?>
                             </li>
-                            <? if ($currentUser['usertype_id'] == 1): ?>
+                            <?php if ($currentUser['usertype_id'] == 1): ?>
                                 <li class="nav-item">
-                                    <?= $this->Html->link('<i class="fas fa-users"></i> USUARIOS', '/usuario', ['escape' => false, 'class' => 'nav-link']) ?>
+                                    <?php echo $this->Html->link('<i class="fas fa-users"></i> USUARIOS', '/usuario', ['escape' => false, 'class' => 'nav-link']) ?>
                                 </li>
-                            <? else: ?>
+                            <?php else: ?>
                                 <li class="nav-item">
-                                    <?= $this->Html->link('<i class="fas fa-user"></i> PERFIL', '/perfil/'.$currentUser['id'], ['escape' => false, 'class' => 'nav-link']) ?>
+                                    <?php echo $this->Html->link('<i class="fas fa-user"></i> PERFIL', '/perfil/'.$currentUser['id'], ['escape' => false, 'class' => 'nav-link']) ?>
                                 </li>
-                            <? endif; ?>
+                            <?php endif; ?>
                             <li class="nav-item">
-                                <?= $this->Html->link('<i class="fas fa-flask"></i> MUESTRAS', '/muestras', ['escape' => false, 'class' => 'nav-link']) ?>
+                                <?php echo $this->Html->link('<i class="fas fa-flask"></i> MUESTRAS', '/muestras', ['escape' => false, 'class' => 'nav-link']) ?>
                             </li>
                             <li class="nav-item">
-                                <?= $this->Html->link('<i class="fas fa-sign-out-alt "></i> CERRAR SESION', '/logout', ['escape' => false, 'class' => 'nav-link']) ?>
+                                <?php echo $this->Html->link('<i class="fas fa-sign-out-alt "></i> CERRAR SESION', '/logout', ['escape' => false, 'class' => 'nav-link']) ?>
                             </li>
                         </ul>
                     </div>
