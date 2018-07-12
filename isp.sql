@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 27, 2018 at 01:59 PM
--- Server version: 5.7.22-0ubuntu0.16.04.1
--- PHP Version: 7.0.30-1+ubuntu16.04.1+deb.sury.org+1
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 12-07-2018 a las 00:06:04
+-- Versión del servidor: 5.7.21
+-- Versión de PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,53 +19,61 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `isp`
+-- Base de datos: `isp`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `analysisresult`
+-- Estructura de tabla para la tabla `analysis_results`
 --
 
-CREATE TABLE `analysis_results` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `analysis_results`;
+CREATE TABLE IF NOT EXISTS `analysis_results` (
   `ppm` int(11) NOT NULL,
   `date_register` date NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `employee_rut` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
   `analysisSamples_id` int(11) NOT NULL,
-  `analysisType_id` int(11) NOT NULL
+  `analysisType_id` int(11) NOT NULL,
+  PRIMARY KEY (`analysisSamples_id`,`analysisType_id`),
+  KEY `analysisSamples_id` (`analysisSamples_id`),
+  KEY `analysisType_id` (`analysisType_id`),
+  KEY `employee_rut` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `analysissamples`
+-- Estructura de tabla para la tabla `analysis_samples`
 --
 
-CREATE TABLE `analysis_samples` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `analysis_samples`;
+CREATE TABLE IF NOT EXISTS `analysis_samples` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `temperatureSample` decimal(10,0) NOT NULL,
   `quantitySample` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `employee_rut` varchar(10) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  PRIMARY KEY (`id`),
+  KEY `particular_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `analysistype`
+-- Estructura de tabla para la tabla `analysis_types`
 --
 
-CREATE TABLE `analysis_types` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+DROP TABLE IF EXISTS `analysis_types`;
+CREATE TABLE IF NOT EXISTS `analysis_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `analysistype`
+-- Volcado de datos para la tabla `analysis_types`
 --
 
 INSERT INTO `analysis_types` (`id`, `name`) VALUES
@@ -76,59 +86,78 @@ INSERT INTO `analysis_types` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contact`
+-- Estructura de tabla para la tabla `contacts`
 --
 
-CREATE TABLE `contacts` (
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE IF NOT EXISTS `contacts` (
   `rut` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `name` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   `phone` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `company_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`rut`),
+  KEY `company_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phone`
+-- Estructura de tabla para la tabla `phones`
 --
 
-CREATE TABLE `phones` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `phones`;
+CREATE TABLE IF NOT EXISTS `phones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `phone` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `particular_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `particular_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `rut` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `address` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `email` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `usertype_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `status` tinyint(1) NOT NULL,
+  `usertype_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `usertype_id` (`usertype_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `rut`, `name`, `password`, `address`, `email`, `status`, `usertype_id`) VALUES
+(1, '1', 'Administrador', '$2y$10$16eJQeYICIidDmvJK7Pp2u1/nlkaK0V6/fQ2z2CXGEnct.0.dbzCW', 'Bronx #69420', NULL, 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_type`
+-- Estructura de tabla para la tabla `user_types`
 --
 
-CREATE TABLE `user_types` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user_types`;
+CREATE TABLE IF NOT EXISTS `user_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `description` varchar(100) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `description` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `user_type`
+-- Volcado de datos para la tabla `user_types`
 --
 
 INSERT INTO `user_types` (`id`, `name`, `description`) VALUES
@@ -139,95 +168,42 @@ INSERT INTO `user_types` (`id`, `name`, `description`) VALUES
 (5, 'Particular', 'Puede crear, modificar y dar de baja sus datos. ');
 
 --
--- Indexes for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Indexes for table `analysisresult`
+-- Filtros para la tabla `analysis_results`
 --
 ALTER TABLE `analysis_results`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `analysisSamples_id` (`analysisSamples_id`),
-  ADD KEY `analysisType_id` (`analysisType_id`),
-  ADD KEY `employee_rut` (`employee_rut`);
+  ADD CONSTRAINT `analysis_results_ibfk_1` FOREIGN KEY (`analysisSamples_id`) REFERENCES `analysis_samples` (`id`),
+  ADD CONSTRAINT `analysis_results_ibfk_2` FOREIGN KEY (`analysisType_id`) REFERENCES `analysis_types` (`id`),
+  ADD CONSTRAINT `analysis_results_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Indexes for table `analysissamples`
+-- Filtros para la tabla `analysis_samples`
 --
 ALTER TABLE `analysis_samples`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `employee_rut` (`employee_rut`),
-  ADD KEY `particular_id` (`user_id`);
+  ADD CONSTRAINT `analysis_samples_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Indexes for table `analysistype`
---
-ALTER TABLE `analysis_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `contact`
+-- Filtros para la tabla `contacts`
 --
 ALTER TABLE `contacts`
-  ADD PRIMARY KEY (`rut`),
-  ADD KEY `company_id` (`company_id`);
+  ADD CONSTRAINT `contacts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Indexes for table `phone`
+-- Filtros para la tabla `phones`
 --
 ALTER TABLE `phones`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `particular_id` (`particular_id`);
+  ADD CONSTRAINT `phones_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Indexes for table `user`
+-- Filtros para la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `usertype_id` (`usertype_id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`usertype_id`) REFERENCES `user_types` (`id`);
+COMMIT;
 
---
--- Indexes for table `user_type`
---
-ALTER TABLE `user_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `analysisresult`
---
-ALTER TABLE `analysis_results`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `analysissamples`
---
-ALTER TABLE `analysis_samples`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `analysistype`
---
-ALTER TABLE `analysis_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `phone`
---
-ALTER TABLE `phones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `user_type`
---
-ALTER TABLE `user_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-  
-  ALTER TABLE `users` ADD `status` BOOLEAN NOT NULL AFTER `email`;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
