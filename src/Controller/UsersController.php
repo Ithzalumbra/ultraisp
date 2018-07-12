@@ -80,7 +80,7 @@ class UsersController extends AppController
 
                     }
                 }
-                $this->Flash->success(__('El usuario se ha registrado correctamentes.'));
+                $this->Flash->success(__('El usuario se ha registrado correctamente.'));
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Ha ocurrido un error.'));

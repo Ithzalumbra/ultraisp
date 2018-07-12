@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center ">
-                    <h6>Copyright &reg; - On Tour 2018</h6>
+                    <h6>Copyright &reg; - isp 2018</h6>
                 </div>
             </div>
         </div>

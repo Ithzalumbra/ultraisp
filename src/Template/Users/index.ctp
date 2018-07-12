@@ -12,7 +12,7 @@
             <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-3 mb-md-0">
                 <?php echo  $this->Form->control('name', ['class' => 'form-control', 'placeholder' => 'Nombre', 'label' => false, 'type' => 'text']); ?>
             </div>
-            <div class="col-12 col-sm-3 col-md-2">
+            <div class="col-12 col-sm-8 col-md-6 mt-4 text-center">
                 <div class="btn-group" role="group">
                     <?php echo  $this->Form->button('Buscar', [
                         'type' => 'submit',
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-8 mt-3">
+            <div class="col-12 col-md-10 mt-3">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -53,7 +53,7 @@
                                 <td><?php echo  h($user->name) ?></td>
                                 <td><?php echo  $user->address != null ? $user->address : 'No tiene' ?></td>
                                 <td><?php echo  $user->email != null ? $user->email : 'No tiene' ?></td>
-                                <td><?php echo  $user->status == 1 ? 'Habilitado' : 'Deshabilitado' ?><?php echo  $this->Form->postLink(__('<i class="fas fa-sync-alt"></i>'), ['action' => 'changeState', $user->id], ['escape' => false]) ?>
+                                <td><?php echo  $user->status == 1 ? 'Habilitado' : 'Deshabilitado' ?><?php echo  $this->Form->postLink(__(' <i class="fas fa-sync-alt"></i>'), ['action' => 'changeState', $user->id], ['escape' => false]) ?>
 
                                 </td>
                                 <td><?php echo  h($user->UserTypes['name'])?></td>

@@ -9,7 +9,7 @@
                 <?php echo $this->Form->create();?>
                 <?php echo $this->Form->control('analysisSamples_id', ['class' => 'form-control', 'placeholder' => 'Código Muestra', 'label' => false, 'type' => 'text']);?>
             </div>
-            <div class="col-12 col-sm-3 col-md-2">
+            <div class="col-12 col-md-10 mt-md-4 text-center">
                 <div class="btn-group" role="group">
                 <?php echo  $this->Form->button('Buscar', [
                     'type' => 'submit',
