@@ -38,8 +38,7 @@ class AnalysisResultsTable extends Table
         $this->setTable('analysis_results');
         $this->setDisplayField('id');
 
-        $this->setPrimaryKey('analysisSamples_id');
-        $this->setPrimaryKey('analysisType_id');
+        $this->setPrimaryKey(['analysisType_id','analysisSamples_id']);
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
@@ -71,20 +70,6 @@ class AnalysisResultsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator
-            ->integer('ppm')
-            ->requirePresence('ppm', 'create')
-            ->notEmpty('ppm');
-
-        $validator
-            ->date('date_register')
-            ->requirePresence('date_register', 'create')
-            ->notEmpty('date_register');
-
-        $validator
-            ->boolean('status')
-            ->requirePresence('status', 'create')
-            ->notEmpty('status');
 
         return $validator;
     }
@@ -99,6 +84,8 @@ class AnalysisResultsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['analysisType_id'], 'AnalysisTypes'));
+        $rules->add($rules->existsIn(['analysisSamples_id'], 'AnalysisSamples'));
 
         return $rules;
     }

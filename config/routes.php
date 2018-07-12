@@ -63,6 +63,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/perfil/:id/otros', ['controller' => 'Users', 'action' => 'extras']);
     $routes->connect('/muestras', ['controller' => 'AnalysisResults', 'action' => 'index']);
     $routes->connect('/muestras/detalles/:id', ['controller' => 'AnalysisResults', 'action' => 'details']);
+    $routes->connect('/muestras/llenar/:id', ['controller' => 'AnalysisResults', 'action' => 'fillPpm']);
+    $routes->connect('/tipo-de-analisis', ['controller' => 'AnalysisTypes', 'action' => 'index']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

@@ -53,7 +53,9 @@
                                 <td><?= h($user->name) ?></td>
                                 <td><?= h($user->address) ?></td>
                                 <td><?= $user->email != null ? $user->email : 'No tiene' ?></td>
-                                <td><?= $user->status == 1 ? 'Habilitado' : 'Deshabilitado' ?></td>
+                                <td><?= $user->status == 1 ? 'Habilitado' : 'Deshabilitado' ?><?= $this->Form->postLink(__('<i class="fas fa-sync-alt"></i>'), ['action' => 'changeState', $user->id], ['escape' => false]) ?>
+
+                                </td>
                                 <td><?= h($user->UserTypes['name'])?></td>
 
                             </tr>

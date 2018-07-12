@@ -21,7 +21,6 @@ class AnalysisTypesController extends AppController
     public function index()
     {
         $analysisTypes = $this->paginate($this->AnalysisTypes);
-
         $this->set(compact('analysisTypes'));
     }
 
@@ -49,6 +48,9 @@ class AnalysisTypesController extends AppController
     public function add()
     {
         $analysisType = $this->AnalysisTypes->newEntity();
+        $analysisTypes = $this->paginate($this->AnalysisTypes);
+
+
         if ($this->request->is('post')) {
             $analysisType = $this->AnalysisTypes->patchEntity($analysisType, $this->request->getData());
             if ($this->AnalysisTypes->save($analysisType)) {
@@ -58,7 +60,7 @@ class AnalysisTypesController extends AppController
             }
             $this->Flash->error(__('The analysis type could not be saved. Please, try again.'));
         }
-        $this->set(compact('analysisType'));
+        $this->set(compact('analysisTypes'));
     }
 
     /**

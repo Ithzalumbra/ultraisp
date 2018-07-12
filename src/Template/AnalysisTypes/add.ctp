@@ -1,23 +1,23 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\AnalysisType $analysisType
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Analysis Types'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="analysisTypes form large-9 medium-8 columns content">
-    <?= $this->Form->create($analysisType) ?>
-    <fieldset>
-        <legend><?= __('Add Analysis Type') ?></legend>
-        <?php
-            echo $this->Form->control('name');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<section id="m-register" class="pb-3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h2>Agregar Tipos de Analisis</h2>
+            </div>
+            <div class="col-12 col-sm-3 col-md-2">
+                <a href="/tipo-de-analisis" class="btn w-100"><i class="fas fa-angle-double-left"></i> Volver</a>
+            </div>
+            <div class="col-8">
+
+                <?=$this->Form->create('')?>
+                <?= $this->Form->control('name',['class' => 'form-control', 'div' => false, 'label' => false, 'placeholder' => 'Nombre tipo de analisis'])?>
+                <br>
+                <?= $this->Form->button('Guardar', [
+                    'type' => 'submit',
+                    'class' => 'btn '])
+                ?>
+                <?=$this->Form->end()?>
+            </div>
+        </div>
+    </div>
+</section>

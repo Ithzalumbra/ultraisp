@@ -16,14 +16,15 @@
                 <div class="form-group">
                     <?= $this->Form->control('password', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Contraseña', 'required', 'value' => '']) ?>
                 </div>
-                <div class="form-group address">
-                    <?= $this->Form->control('address', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Direccion', 'required']) ?>
-                </div>
-
+                <? if ($user->usertype_id == 3 || $user->usertype_id == 5): ?>
+                    <div class="form-group address">
+                        <?= $this->Form->control('address', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Direccion', 'required']) ?>
+                    </div>
+                <? endif; ?>
                 <?= $this->Form->submit('Guardar', ['class' => 'btn w-100']) ?>
                 <br>
-                <?= $this->Html->link($user->usertype_id == '3'? 'Contactos': 'Telefonos',
-                    '/perfil/'.$user->id.'/otros/',
+                <? if ($user->usertype_id == 3 || $user->usertype_id == 5) echo $this->Html->link($user->usertype_id == '3' ? 'Contactos' : 'Telefonos',
+                    '/perfil/' . $user->id . '/otros/',
                     ['class' => 'btn w-100', 'escape' => false])
                 ?>
                 <br><br>

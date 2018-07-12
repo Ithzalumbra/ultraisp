@@ -87,7 +87,7 @@ class AnalysisSamplesController extends AppController
                     $this->Flash->success(__('La tipos de prueba han sido ingresadas correctamente.'));
                 }
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'AnalysisResults', 'action' => 'index']);
                  }
                 $this->Flash->error(__('The analysis sample could not be saved. Please, try again.'));
             }

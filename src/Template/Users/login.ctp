@@ -21,12 +21,3 @@
         </div>
     </div>
 </section>
-
-<div class="links text-center">
-    <p>Ir a:</p>
-    <a href="m-reception.html">Recepci&oacute;n</a>
-    <a href="m-list.html">Listado</a>
-    <a href="m-register.html">Registro</a>
-    <a href="m-search.html">B&uacute;squeda</a>
-    <a href="m-result.html">Resultado</a>
-</div>

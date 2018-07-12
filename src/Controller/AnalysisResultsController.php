@@ -38,7 +38,7 @@ class AnalysisResultsController extends AppController
         ];
 
         if ($this->getCurrentUser()['usertype_id'] != 1 || $this->getCurrentUser()['usertype_id'] != 2 || $this->getCurrentUser()['usertype_id'] != 4) {
-            $analysisResults = $this->AnalysisResults->find('search', ['search' => $this->request->query])->where(['AnalysisResults.user_id' => $this->getCurrentUser()['id']])->group('analysisSamples_id');
+            $analysisResults = $this->AnalysisResults->find('search', ['search' => $this->request->query])->where(['AnalysisSamples.user_id' => $this->getCurrentUser()['id']])->group('analysisSamples_id')->contain(['AnalysisSamples']);
         }
 
         else {
@@ -152,6 +152,35 @@ class AnalysisResultsController extends AppController
 
         $data = ['name' => $names, 'ppm' => $ppms];
         $this->set(compact('analysisDetails', 'data'));
+
+    }
+
+
+    public function fillPpm()
+    {
+        $idResult = $this->request->params['id'];
+            $analysisDetails = $this->AnalysisResults->find()->where(['AnalysisResults.analysisSamples_id' => $idResult])->contain(['AnalysisTypes','AnalysisSamples']);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            pr('======================================');
+            $analysisResult = $this->AnalysisResults->newEntities( $this->request->getData()['resultado']);
+
+            foreach ($analysisResult as $ar){
+                $ar->analysisSamples_id = $idResult;
+                $ar->status = 1;
+            }
+            if ($this->AnalysisResults->saveMany($analysisResult)) {
+
+                pr($analysisResult); die;
+                $this->Flash->success(__('The analysis result has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The analysis result could not be saved. Please, try again.'));
+        }
+
+
+        $this->set(compact('analysisDetails'));
 
     }
 }

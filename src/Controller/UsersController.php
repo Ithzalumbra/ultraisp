@@ -99,6 +99,22 @@ class UsersController extends AppController
         $this->set(compact('user', 'usertypes'));
     }
 
+    public function changeState($id = null)
+    {
+        $user = $this->Users->get($id, [
+            'contain' => []
+        ]);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if($user->status == 1)
+                $user->status = 0;
+            else
+                $user->status = 1;
+            if ($this->Users->save($user)) {
+                return $this->redirect('/usuario');
+            }
+            $this->Flash->error(__('Ha ocurrido un error.'));
+    }
+
     /**
      * Delete method
      *
@@ -122,12 +138,15 @@ class UsersController extends AppController
     public function login()
     {
         if ($this->request->is(['post'])) {
-            pr($this->request->data);
             $user = $this->Auth->identify();
             if ($user) {
-                $this->Auth->setUser($user);
-
-                return $this->redirect($this->Auth->redirectUrl());
+                if ($user['status'] == 1 ){
+                    $this->Auth->setUser($user);
+                    return $this->redirect($this->Auth->redirectUrl());
+                }
+                else{
+                    $this->Flash->error(__('Su usuario se encuentra deshabilitado, hable con el administrador.'));
+                }
             } else {
                 $this->Flash->error(__('RUT o contraseña incorrecto.'));
             }
