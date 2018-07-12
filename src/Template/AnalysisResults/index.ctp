@@ -27,7 +27,7 @@
                 <?php endif; ?>
                 <?php if ($currentUser['usertype_id'] == 1): ?>
                     <?php echo  $this->Html->link('<i class="fab fa-sith"></i> Tipos de Analisis',
-                        ['controller' => 'AnalysisTypes','action' => 'add'],
+                        ['controller' => 'AnalysisTypes','action' => 'index'],
                         ['class' => 'btn btn-outline-info', 'escape' => false])
                     ?>
                 <?php endif; ?>
@@ -60,8 +60,9 @@
                                     <tr>
                                         <td><?php echo h($asam->analysis_sample->user_id)?></td>
                                         <td><?php echo h($asam->analysisSamples_id)?></td>
-                                        <td><?php echo h($asam->status) == 0 ? '<a href="/muestras/llenar/'.h($asam->analysisSamples_id).'">En Proceso</a>' : 'Terminado'?></a></td>
+                                        <td><?php echo h($asam->status) == 0 ? ($currentUser['usertype_id'] == 2 ? 'En Proceso': '<a href="/muestras/llenar/'.h($asam->analysisSamples_id).'">En Proceso</a>'): 'Terminado'?></a></td>
                                     </tr>
+
                                 <?php endforeach;
                             endif; ?>
                     <?php else: ?>

@@ -171,12 +171,11 @@ class AnalysisResultsController extends AppController
             }
             if ($this->AnalysisResults->saveMany($analysisResult)) {
 
-                pr($analysisResult); die;
-                $this->Flash->success(__('The analysis result has been saved.'));
+                $this->Flash->success(__('Los datos se han guardado correctamente.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The analysis result could not be saved. Please, try again.'));
+            $this->Flash->error(__('Ha ocurrido un error.'));
         }
 
 

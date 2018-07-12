@@ -6,16 +6,17 @@
                 <h2>Recepci&oacute;n de Muestras</h2>
             </div>
 
+
             <div class="col-12 col-md-8 col-xl-6">
                 <h5>Datos Cliente</h5>
                 <div class="form-group">
-                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Código Cliente', 'disabled' => true, 'value' => $currentUser['id']]) ?>
+                    <?php echo $this->Form->control('user_id', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Código Cliente']) ?>
                 </div>
                 <div class="form-group">
-                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Rut Cliente', 'disabled' => true, 'value' => $currentUser['rut']]) ?>
+                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Rut Cliente']) ?>
                 </div>
                 <div class="form-group">
-                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre Cliente', 'disabled' => true, 'value' => $currentUser['name']]) ?>
+                    <?php echo $this->Form->control('', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Nombre Cliente']) ?>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-xl-4">
@@ -43,7 +44,7 @@
                     </ul>
                 </div>
                 <button type="submit" class="btn">Guardar</button>
-                <button type="submit" class="btn">Salir</button>
+                <a href="/muestras" class="btn">Salir</a>
             </div>
 
         </div>

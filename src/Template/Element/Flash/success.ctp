@@ -4,5 +4,5 @@ if (!isset($params['escape']) || $params['escape'] !== false) {
 }
 ?>
 <div class="alert alert-success" onclick="this.classList.add('hidden');">
-    <strong>Success!</strong> <?= $message ?>
+    <strong>Felicidades!</strong> <?= $message ?>
 </div>

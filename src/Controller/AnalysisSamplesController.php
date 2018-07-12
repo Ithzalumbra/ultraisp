@@ -71,7 +71,7 @@ class AnalysisSamplesController extends AppController
                     $res->ppm = 0;
                     $res->date_register = $time = Time::now();
                     $res->status = 0;
-                    $res->user_id = $this->getCurrentUser()['id'];
+                    $res->user_id = $this->request->getData()['user_id'];
                     $res->analysisSamples_id = $analysisSample->id;
                     $res->dirty('analysis_type', true);
                 }
@@ -80,16 +80,14 @@ class AnalysisSamplesController extends AppController
                     $aux++;
                 }
 
-                $this->Flash->success(__('La muestras han sido ingresadas correctamente.'));
-//                pr($analysisResults); die;
                 if($analysisResultsTable->saveMany($analysisResults))
                 {
-                    $this->Flash->success(__('La tipos de prueba han sido ingresadas correctamente.'));
+                    $this->Flash->success(__('La muestras han sido ingresadas correctamente.'));
                 }
 
                 return $this->redirect(['controller' => 'AnalysisResults', 'action' => 'index']);
                  }
-                $this->Flash->error(__('The analysis sample could not be saved. Please, try again.'));
+                $this->Flash->error(__('Ha ocurrido un error.'));
             }
             $users = $this->AnalysisSamples->Users->find('list', ['limit' => 200]);
             $this->set(compact('analysisSample', 'users', 'analysisT'));

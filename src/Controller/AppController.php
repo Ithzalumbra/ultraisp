@@ -62,7 +62,7 @@ class AppController extends Controller
                 'controller' => 'AnalysisResults',
                 'action' => 'home'
             ],
-            'authError' => '',
+            'authError' => 'No tiene acceso a esa seccion',
             'flash' => [
                 'element' => 'error'
             ],
@@ -92,7 +92,7 @@ class AppController extends Controller
             $this->set('currentUser', $this->Auth->user());
             $this->currentUser = $this->Auth->user();
             if ($this->request->getParam("action") == 'login') {
-                $this->redirect(['controller' => 'Users', 'action' => 'index']);
+                $this->redirect(['controller' => 'AnalysisResults', 'action' => 'index']);
             }
         }
         else

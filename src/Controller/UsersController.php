@@ -62,10 +62,25 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            $user->status = 1 ;
+            $user->status = 1;
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('El usuario se ha guardado correctamente.'));
+                if ($user->usertype_id == 5) {
+                    $phone = $this->Users->Phones->newEntity();
+                    $phone->phone = $this->request->data['phone'];
+                    $phone->user_id = $user->id;
+                    if ($this->Users->Phones->save($phone)) {
 
+                    }
+                } else if ($user->usertype_id == 3) {
+                    $contact = $this->Users->Contacts->newEntity();
+                    $contact = $this->Users->Contacts->patchEntity($contact, $this->request->data['contact']);
+                    $contact->user_id = $user->id;
+                    $contact->rut = $this->request->data['contact']['rut'];
+                    if ($this->Users->Contacts->save($contact)) {
+
+                    }
+                }
+                $this->Flash->success(__('El usuario se ha registrado correctamentes.'));
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Ha ocurrido un error.'));
